@@ -7,7 +7,7 @@ function myFunction() {
     ul = document.getElementById("myUL");
     li = ul.getElementsByTagName("li");
     for (i = 0; i < li.length; i++) {
-        a = li[i].getElementsByTagName("button")[0];
+        a = li[i].getElementsByTagName("h2")[0];
         txtValue = a.textContent || a.innerText;
         if (txtValue.toUpperCase().indexOf(filter) > -1) {
             li[i].style.display = "";
@@ -24,12 +24,8 @@ function myFunction() {
 
 function users() {
     console.log('users() function called');
-    // document.getElementById('cotn_principal').style.display = "none";
-    // document.getElementById('container').style.display = "block";
-    document.getElementById('chat_user').style.display = "none";
-    document.getElementById('chat').style.display = "none";
-    document.getElementById('send').style.display = "none";
-    document.getElementById('chat_user').style.display = "none";
+    document.getElementById('chat_user').style.display = "block";
+    document.getElementById('chat').style.display = "block";
     user_email = document.getElementById('inp_mesg').value;
     if (user_email) {
         console.log(user_email);
@@ -45,10 +41,11 @@ function users() {
                 }
                 user_name = sentence.join(" ");
                 var lists = [email_id, user_name]
+                console.log(user_name+"---")
                 if (user_email != email_id) {
-                    console.log(user_name);                                                                
+                    console.log(user_name);
                     document.querySelector('#myUL').innerHTML += `<li title = ` + user_name + `>
-                    <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/chat_avatar_01.jpg" alt=""/><div><h2 class = "open-button" id="`+ lists + `" onclick = "openForm(this.id)">` + user_name + `</h2><h3><span class  = "status orange"></span>offline</h3></div></li>`;
+                    <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/chat_avatar_01.jpg" alt=""/><div><h2 class = "open-button" id="`+ lists + `" onclick = "openForm(this.id)" style="cursor: pointer;">` + user_name + `</h2><h3><span class  = "status orange"></span>offline</h3></div></li>`;
                     console.log(doc.data().Email)
                 }
 
@@ -70,7 +67,6 @@ function openForm(button_id) {
     to_user = word1
     document.getElementById('chat_user').innerHTML = "";
     document.getElementById('chat').innerHTML = "";
-    document.getElementById('send').innerHTML = "";
     head_user(word2);
     message_(word1);
     console.log('history');
@@ -108,7 +104,6 @@ function head_user(button_id) {
 
 function message_(button_id) {
     document.getElementById("chat").style.display = "block";
-    document.getElementById("send").style.display = "block";
     console.log(user_email + ":" + button_id)
     db.collection("messages").orderBy('time').onSnapshot(function (snapshot) {
         snapshot.docChanges().forEach(function (change) {
