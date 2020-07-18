@@ -6,6 +6,10 @@
     <link rel="shortcut icon" href="https://cdn4.iconfinder.com/data/icons/web-ui-color/128/Chat2-512.png"
         type="image/x-icon">
     <link type="text/css" rel="stylesheet" href="style.css">
+
+    <link rel='stylesheet prefetch'
+        href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.2/css/font-awesome.min.css'>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"> </script> 
     <script src="chat.js"></script>
     <title>
         SAKSHAM KISAN
@@ -15,9 +19,12 @@
     <script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-firestore.js"></script>
     <script src="https://www.gstatic.com/firebasejs/7.8.0/firebase-analytics.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/5.0.4/firebase.js"></script> 
+
+
+
     <script>
-
-
         // Your web app's Firebase configuration
         var firebaseConfig = {
             apiKey: "AIzaSyDaB5B5Z_HarxWPV5FgkEiK0jdS0_80sGc",
@@ -31,20 +38,17 @@
         };
         // Initialize Firebase
         firebase.initializeApp(firebaseConfig);
-        firebase.analytics();
+        //firebase.analytics();
 
         const db = firebase.firestore();
-
-
-
     </script>
+
 
 </head>
 
 <body>
 
     <div id="take_message">
-
         <input type="email" id="inp_mesg" placeholder="Email" required>
         <button class="favorite styled" onclick='users()'>Chat</button><br>
 
@@ -58,16 +62,15 @@
         <aside>
             <!--------------------- search bar  ---------------------------------------->
             <header>
-                <input type="text" placeholder="search" id="myInput" onkeyup="myFunction()" title="Type in a name">
-                <img src="https://icon-library.net/images/android-mic-icon/android-mic-icon-8.jpg"
+                <input type="text" placeholder="search" id="myInput" onkeyup="myFunction()" title="Type in a name" style="display: none;">
+                <!-- <img src="https://icon-library.net/images/android-mic-icon/android-mic-icon-8.jpg"
                     style="position: relative; right:-155px;width: 25px;top: -36px;cursor: pointer;"
-                    title="Search by voice">
+                    title="Search by voice"> -->
 
             </header>
 
             <!------------------- users list ----------------------------------------------------------->
             <ul id="myUL">
-
             </ul>
         </aside>
         <!----------------- full message box --------------------------------------------->
@@ -79,24 +82,41 @@
 
             <!----------------dispalying all the chats ------------------------------------>
             <section>
-                <ul id="chat">
+                <ul id="chat" class="msg_container_base">
+
                 </ul>
             </section>
 
 
             <!----------------creating message input box and send button---------------------->
-            <footer id="send">
-                <input placeholder="Type your message" type="text" id="msg" required title="enter your message"
-                    style="font-size: large;">
-                <img src="https://icon-library.net/images/android-mic-icon/android-mic-icon-8.jpg" class="micropho"
-                    title="speak your meesage">
-                <label for="fileButton"><img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/1940306/ico_picture.png"
-                        style="cursor: pointer;" title="attach file"></label>
-                <input type="file" id="fileButton" style="display: none;">
-                <button onclick="send_messg()" title="send your message">Send</button>
+            <footer id="send" style="display: none;">
+                <div class="message-input">
+                    <div class="wrap search-wrapper">
+                        <form>
+                            <input type="text" placeholder="Write your message..." id="msg" class="search-box" name="focus" />
+                            <button class="close-icon" type="reset"></button>
+                        </form>
+                        <div class="image-upload">
+                            <label for="photo">
+                                <i class="fa fa-paperclip attachment" aria-hidden="true"></i>
+                            </label>
+                            <input id="photo" type="file" class="file" name="mainimage" value="" onchange="getfile()" style="display: none;"/>
+                           <br><br> 
+
+                        </div>
+                        <button class="submit" onclick="send_messg()" id="submit"><i class="fa fa-paper-plane"
+                                aria-hidden="true"></i></button>
+                    </div>
             </footer>
+
+
         </main>
     </div>
+    <script>
+        $("#submit").click(function() {
+                $(".msg_container_base").stop().animate({ scrollTop: $(".msg_container_base")[0].scrollHeight}, 1000);
+        });
+    </script>
 </body>
 
 </html>
